@@ -78,11 +78,14 @@ class LabAgent:
                 "prompt_fetch_error": prompt.fetch_error,
             },
             usage_details={
-                "prompt_tokens": response.usage.input_tokens,
-                "completion_tokens": response.usage.output_tokens,
+                "input": response.usage.input_tokens,
+                "output": response.usage.output_tokens,
             },
             cost_details={"total": cost_usd},
             prompt=prompt.managed_prompt,
+        )
+        langfuse_client.score_current_trace(
+            name="quality", value=quality_score, data_type="NUMERIC"
         )
 
         metrics.record_request(

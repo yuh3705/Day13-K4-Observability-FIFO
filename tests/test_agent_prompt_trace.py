@@ -19,6 +19,7 @@ class RecordingLangfuseClient:
         self.prompt = ManagedPrompt()
         self.trace_updates: list[dict] = []
         self.generation_updates: list[dict] = []
+        self.scores: list[dict] = []
 
     def get_prompt(self, name: str, **kwargs):
         return self.prompt
@@ -28,6 +29,9 @@ class RecordingLangfuseClient:
 
     def update_current_generation(self, **kwargs) -> None:
         self.generation_updates.append(kwargs)
+
+    def score_current_trace(self, **kwargs) -> None:
+        self.scores.append(kwargs)
 
 
 def test_agent_links_prompt_version_to_trace_and_generation(monkeypatch) -> None:
