@@ -2,7 +2,7 @@
 
 ## 1. Thông tin nhóm
 
-- Tên nhóm:
+- Tên nhóm: FIFO
 - Repository URL:
 - Commit SHA cuối:
 - Thành viên và vai trò:
@@ -50,6 +50,7 @@
 
 Với mỗi thành viên, ghi rõ nhiệm vụ và link commit/PR tương ứng.
 
+
 | Thành viên | Phần việc | Commit/PR | Điều đã học |
-|---|---|---|---|
-| | | | |
+| ------------ | ----------- | --------- | ---------------- |
+|              |             |           |                  |
