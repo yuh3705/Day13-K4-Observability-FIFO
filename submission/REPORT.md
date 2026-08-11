@@ -4,37 +4,48 @@
 
 - Tên nhóm: FIFO
 - Repository URL: https://github.com/yuh3705/Day13-K4-Observability-FIFO
-- Commit SHA cuối:
-- Thành viên và vai trò:
+- Commit SHA cuối: `3965a2f1844e3a4587426c0537eeef88d5a04f72` (cập nhật lại sau lần commit cuối cùng trước khi nộp)
+- Thành viên và vai trò: _(điền tên + vai trò từng thành viên)_
 
 ## 2. Kết quả kỹ thuật
 
-- Điểm `validate_logs.py`: 100/100
-- Tổng số traces: 22
+- Điểm `validate_logs.py`: 100/100 (78 log records, 0 field thiếu, 0 enrichment thiếu, 33 correlation ID duy nhất)
+- Tổng số traces: 62 (kiểm tra qua Langfuse API lúc viết báo cáo; con số tăng dần theo mỗi lần chạy `/chat` hoặc `scripts/load_test.py`)
 - Số PII leak còn lại: 0
-- Link/đường dẫn dashboard:
+- Link/đường dẫn dashboard: https://jp.cloud.langfuse.com/project/cmsocv6n7002sad0iijbq5imz/dashboards (dashboard "Day 13 AI Observability")
 
 ## 3. Logging và tracing
 
-- Evidence correlation ID:
-- Evidence PII redaction:
-- Evidence trace waterfall:
-- Giải thích một span đáng chú ý:
+- Evidence correlation ID: `submission/evidence/correlation_id.png`
+- Evidence PII redaction: `submission/evidence/PII_log.png`
+- Evidence trace waterfall: `submission/evidence/trace_detail_optional.png` (waterfall `run` → `retrieve` → `generate`, kèm Graph view). *Lưu ý: `submission/evidence/trace_detail.png` là ảnh cũ, chụp trước khi gắn `@observe` lên `retrieve`/`generate` nên chỉ có một span `run` duy nhất — không dùng ảnh này làm evidence waterfall.*
+- Giải thích một span đáng chú ý: Span `retrieve` (kiểu `RETRIEVER`, con của `run`) là span quan trọng nhất để chẩn đoán sự cố — nó bọc lệnh gọi `app/mock_rag.py:retrieve()`, nơi hai incident `rag_slow` (thêm `time.sleep(2.5)`) và `tool_fail` (raise `RuntimeError`) được mô phỏng. Vì `retrieve` và `generate` là hai span tách biệt (không còn gộp chung vào một `generation` như instrumentation ban đầu), khi bật `rag_slow` thì đúng span `retrieve` hiển thị latency tăng đột biến (~2.5s) trong khi `generate` không đổi (~0.15s) — đây chính là bằng chứng dùng trong mục 6.
 
 ## 4. Prompt versioning
 
-- Prompt name:
-- Version/label baseline:
-- Version/label candidate:
+- Prompt name: `day13-chat`
+- Version/label baseline: v1 — labels `baseline`, `production` (nội dung: `Feature={{feature}}\nDocs={{docs}}\nQuestion={{message}}`)
+- Version/label candidate: v2 — labels `candidate`, `latest` (nội dung: thêm dòng `Answer in at most 2 concise sentences.`)
 - Trace ID của mỗi version:
-- Bằng chứng đổi label hoặc rollback:
+  - v1 / label `baseline`: `1393ad88cf8dfb9ec1c5ec41a455c59f`
+  - v2 / label `candidate`: `3eaea44105dba5921a53be422e96d316`
+  - v2 khi tạm giữ label `production`: `93c239cc251c354dfb364b6d181c0996`
+  - v1 sau khi rollback `production`: `c8af889f3fb6ae5058f43c0dc18bf99d`
+- Bằng chứng đổi label hoặc rollback: `submission/evidence/version_before.png` (production đang ở v2: `latest, candidate` | v1 chỉ có `baseline`) → `submission/evidence/version_after.png` (rollback: production quay lại v1: `production, baseline` | v2 còn `latest, candidate`). Đã xác minh khớp với trạng thái thật qua API.
 
 ## 5. Dashboard, SLO và alerts
 
-- Kết quả `validate_dashboard.py`:
-- Evidence dashboard:
-- SLO đã chọn và lý do:
-- Alert rules và runbook:
+- Kết quả `validate_dashboard.py`: HỢP LỆ — 6/6 panel có trong dashboard contract
+- Evidence dashboard: `submission/evidence/dashboard.jpeg` (Latency, Traffic, Error, Cost, Tokens, Quality — công cụ: Langfuse Custom Dashboards, chi tiết từng widget xem [docs/dashboard-spec.md](../docs/dashboard-spec.md))
+- SLO đã chọn và lý do (`config/slo.yaml`, window 28 ngày):
+  - `latency_p95_ms` ≤ 3000ms (target 99.5%) — ngưỡng chấp nhận được cho một chat response trước khi cảm giác "treo".
+  - `error_rate_pct` ≤ 2% (target 99.0%) — hệ thống lab dùng mock LLM/RAG nên lỗi phải hiếm, hầu hết request phải thành công.
+  - `daily_cost_usd` ≤ 2.5 (target 100%) — giới hạn ngân sách demo/lab, dễ phát hiện cost spike do incident hoặc bug.
+  - `quality_score_avg` ≥ 0.75 (target 95%) — heuristic quality score phải duy trì mức chấp nhận được, không để một prompt/model change làm giảm chất lượng âm thầm.
+- Alert rules và runbook (`config/alert_rules.yaml`, chi tiết từng bước điều tra tại [docs/alerts.md](../docs/alerts.md)):
+  1. `high_latency_p95` (warning) — `latency_p95 > 3000ms` duy trì 5 phút, owner `on-call-engineer`.
+  2. `elevated_error_rate` (critical) — `error_rate_pct > 5%` duy trì 3 phút, owner `on-call-engineer`.
+  3. `cost_budget_exceeded` (warning) — `daily_cost_usd > 2.5`, owner `team-lead`.
 
 ## 6. Điều tra challenge
 
