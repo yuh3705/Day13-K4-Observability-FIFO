@@ -4,7 +4,7 @@
 
 - Tên nhóm: FIFO
 - Repository URL: https://github.com/yuh3705/Day13-K4-Observability-FIFO
-- Commit SHA cuối: `3965a2f1844e3a4587426c0537eeef88d5a04f72` (cập nhật lại sau lần commit cuối cùng trước khi nộp)
+- Commit SHA cuối: `5cfada2907ae7d19bddd60f0098f4550281b59b5`
 - Thành viên và vai trò: _(điền tên + vai trò từng thành viên)_
 
 ## 2. Kết quả kỹ thuật
