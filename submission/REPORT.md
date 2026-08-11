@@ -67,6 +67,6 @@ Với mỗi thành viên, ghi rõ nhiệm vụ và link commit/PR tương ứng.
 
 | Thành viên | Phần việc | Commit/PR | Điều đã học |
 | ------------ | ----------- | --------- | ---------------- |
-| Nguyen Mai Huy | CP1: middleware, correlation ID, enrichment logs | _(điền link commit/PR)_ | _(điền)_ |
-| Bui Minh Long | CP2: cấu hình Langfuse, SLO/Alert Rules, Alert Runbook | _(điền link commit/PR)_ | _(điền)_ |
-| Nguyen Quang Huy | Dashboard spec, load test, Challenge/CP3, tổng hợp báo cáo | _(điền link commit/PR)_ | _(điền)_ |
+| Nguyen Mai Huy | CP1: middleware, correlation ID, enrichment logs | [`4af4b1c`](https://github.com/yuh3705/Day13-K4-Observability-FIFO/commit/4af4b1c) "cp1" | _(điền)_ |
+| Bui Minh Long | CP2: cấu hình Langfuse, SLO/Alert Rules, Alert Runbook | [`8c84c6b`](https://github.com/yuh3705/Day13-K4-Observability-FIFO/commit/8c84c6b) "Fill in SLOs, symptom-based alert rules, and runbooks" | _(điền)_ |
+| Nguyen Quang Huy | Dashboard spec, load test, Challenge/CP3, tổng hợp báo cáo | [`3965a2f`](https://github.com/yuh3705/Day13-K4-Observability-FIFO/commit/3965a2f) "Update report and observability evidence" | _(điền)_ |
