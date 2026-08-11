@@ -4,11 +4,13 @@
 
 - Tên nhóm: FIFO
 - Repository URL: https://github.com/yuh3705/Day13-K4-Observability-FIFO
-- Commit SHA cuối: `815aedca008dfa66bf2fe549316b8d5853164849`
+- Commit SHA cuối: `ef9e2876844bba74f2e7d1c7220002c8a7ee92c0`
 - Thành viên và vai trò:
-  - **Nguyen Mai Huy — Vai trò A (Tech Lead/Backend Engineer):** Phụ trách CP1 (xây dựng middleware, gán correlation ID, enrichment logs).
-  - **Bui Minh Long — Vai trò B (SRE & Alerts Engineer):** Phụ trách CP2 (cấu hình Langfuse, thiết lập SLO/Alert Rules, viết Alert Runbook).
-  - **Nguyen Quang Huy — Vai trò C (QA & Chief Investigator):** Thiết kế Dashboard Spec, thực hiện load test, quản lý Challenge/Practice Incident (CP3) và tổng hợp báo cáo nhóm.
+  - **Nguyen Mai Huy** — Vai trò A, Tech Lead/Backend Engineer (CP1: middleware, correlation ID, log enrichment, PII).
+  - **Bui Minh Long** — Vai trò B, SRE & Alerts Engineer (CP2: Langfuse tracing, prompt versioning, SLO/Alert Rules, runbook).
+  - **Nguyen Quang Huy** — Vai trò C, QA & Chief Investigator (Dashboard spec, load test, Challenge CP3, tổng hợp báo cáo).
+
+  Chi tiết từng đầu việc và commit tương ứng: xem mục [7. Đóng góp cá nhân](#7-đóng-góp-cá-nhân).
 
 ## 2. Kết quả kỹ thuật
 
@@ -67,6 +69,6 @@ Với mỗi thành viên, ghi rõ nhiệm vụ và link commit/PR tương ứng.
 
 | Thành viên | Phần việc | Commit/PR | Điều đã học |
 | ------------ | ----------- | --------- | ---------------- |
-| Nguyen Mai Huy | CP1: middleware, correlation ID, enrichment logs | [`4af4b1c`](https://github.com/yuh3705/Day13-K4-Observability-FIFO/commit/4af4b1c) "cp1" | _(điền)_ |
-| Bui Minh Long | CP2: cấu hình Langfuse, SLO/Alert Rules, Alert Runbook | [`8c84c6b`](https://github.com/yuh3705/Day13-K4-Observability-FIFO/commit/8c84c6b) "Fill in SLOs, symptom-based alert rules, and runbooks" | _(điền)_ |
-| Nguyen Quang Huy | Dashboard spec, load test, Challenge/CP3, tổng hợp báo cáo | [`3965a2f`](https://github.com/yuh3705/Day13-K4-Observability-FIFO/commit/3965a2f) "Update report and observability evidence" | _(điền)_ |
+| Nguyen Mai Huy | - Middleware: correlation ID (extract/generate `x-request-id`, response headers)<br>- `bind_contextvars`/`clear_contextvars` để enrich log theo request<br>- Regex PII (`email`, `phone_vn`, `passport`, `address_vn`) và wiring `scrub_text` vào logging pipeline<br>- Generic exception handler trả `x-request-id` khi lỗi | [`4af4b1c`](https://github.com/yuh3705/Day13-K4-Observability-FIFO/commit/4af4b1c) "cp1", [`d2691db`](https://github.com/yuh3705/Day13-K4-Observability-FIFO/commit/d2691db) "pii_test+evidence" | _(điền)_ |
+| Bui Minh Long | - Tách waterfall trace `run` → `retrieve` (RETRIEVER) → `generate` (GENERATION) thay vì gộp một span<br>- Sửa `usage_details` dùng key `input`/`output` để Langfuse tính đúng token; gắn `score_current_trace` cho quality<br>- Tạo prompt `day13-chat` v1/v2 trên Langfuse, gắn nhãn `baseline`/`candidate`/`production`, thực hiện đổi label và rollback<br>- Viết SLO (`config/slo.yaml`) và 3 alert rule kèm runbook (`config/alert_rules.yaml`, `docs/alerts.md`) | [`8c84c6b`](https://github.com/yuh3705/Day13-K4-Observability-FIFO/commit/8c84c6b) "Fill in SLOs, symptom-based alert rules, and runbooks", [`1540bdb`](https://github.com/yuh3705/Day13-K4-Observability-FIFO/commit/1540bdb) "Add tracing spans to mock LLM/RAG calls", [`65219a2`](https://github.com/yuh3705/Day13-K4-Observability-FIFO/commit/65219a2) "Add baseline and prompt version before/after evidence" | _(điền)_ |
+| Nguyen Quang Huy | - Viết `docs/dashboard-spec.md` (6 nhóm panel: name/unit/time range/threshold/tool)<br>- Dựng 8 widget trên Langfuse Custom Dashboards và gộp thành dashboard "Day 13 AI Observability"<br>- Chạy `scripts/load_test.py` để tạo baseline traffic<br>- Điều tra Challenge CP3 (`rag_slow`), viết mục 6 của báo cáo<br>- Tổng hợp và hoàn thiện `submission/REPORT.md` | [`3965a2f`](https://github.com/yuh3705/Day13-K4-Observability-FIFO/commit/3965a2f) "Update report and observability evidence", [`4c05b26`](https://github.com/yuh3705/Day13-K4-Observability-FIFO/commit/4c05b26) "Add dashboard evidence and update traces screenshot" | _(điền)_ |
