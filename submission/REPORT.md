@@ -3,15 +3,15 @@
 ## 1. Thông tin nhóm
 
 - Tên nhóm: FIFO
-- Repository URL:
+- Repository URL: https://github.com/yuh3705/Day13-K4-Observability-FIFO
 - Commit SHA cuối:
 - Thành viên và vai trò:
 
 ## 2. Kết quả kỹ thuật
 
-- Điểm `validate_logs.py`:
-- Tổng số traces:
-- Số PII leak còn lại:
+- Điểm `validate_logs.py`: 100/100
+- Tổng số traces: 22
+- Số PII leak còn lại: 0
 - Link/đường dẫn dashboard:
 
 ## 3. Logging và tracing
