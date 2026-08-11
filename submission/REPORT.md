@@ -4,8 +4,11 @@
 
 - Tên nhóm: FIFO
 - Repository URL: https://github.com/yuh3705/Day13-K4-Observability-FIFO
-- Commit SHA cuối: `5cfada2907ae7d19bddd60f0098f4550281b59b5`
-- Thành viên và vai trò: _(điền tên + vai trò từng thành viên)_
+- Commit SHA cuối: `815aedca008dfa66bf2fe549316b8d5853164849`
+- Thành viên và vai trò:
+  - **Nguyen Mai Huy — Vai trò A (Tech Lead/Backend Engineer):** Phụ trách CP1 (xây dựng middleware, gán correlation ID, enrichment logs).
+  - **Bui Minh Long — Vai trò B (SRE & Alerts Engineer):** Phụ trách CP2 (cấu hình Langfuse, thiết lập SLO/Alert Rules, viết Alert Runbook).
+  - **Nguyen Quang Huy — Vai trò C (QA & Chief Investigator):** Thiết kế Dashboard Spec, thực hiện load test, quản lý Challenge/Practice Incident (CP3) và tổng hợp báo cáo nhóm.
 
 ## 2. Kết quả kỹ thuật
 
@@ -64,4 +67,6 @@ Với mỗi thành viên, ghi rõ nhiệm vụ và link commit/PR tương ứng.
 
 | Thành viên | Phần việc | Commit/PR | Điều đã học |
 | ------------ | ----------- | --------- | ---------------- |
-|              |             |           |                  |
+| Nguyen Mai Huy | CP1: middleware, correlation ID, enrichment logs | _(điền link commit/PR)_ | _(điền)_ |
+| Bui Minh Long | CP2: cấu hình Langfuse, SLO/Alert Rules, Alert Runbook | _(điền link commit/PR)_ | _(điền)_ |
+| Nguyen Quang Huy | Dashboard spec, load test, Challenge/CP3, tổng hợp báo cáo | _(điền link commit/PR)_ | _(điền)_ |
